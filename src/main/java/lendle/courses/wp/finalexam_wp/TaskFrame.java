@@ -13,6 +13,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JButton;
+import javax.swing.JDesktopPane;
+import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,7 +38,16 @@ public class TaskFrame extends JInternalFrame {
     public TaskFrame() {
         this.setSize(500, 300);
         //Q4: layout 出如圖所示的樣子，
-        //記得 JTextArea 要放在捲軸裡面 (30%)
+        //記得 JTextArea 要放在捲軸裡面 (30%) 
+        this.setLayout(new BorderLayout());
+        JDesktopPane jDesktopPane = new JDesktopPane();
+        this.setContentPane(jDesktopPane);
+        JPanel northPanel = new JPanel();
+        this.add(northPanel, "North");
+        JTextArea textArea = new JTextArea();
+        this.add(textArea);
+        //northPanel.setText("Title:");
+       
         ////////////////////////////
         this.setClosable(true);
         this.setResizable(true);
@@ -70,6 +81,7 @@ public class TaskFrame extends JInternalFrame {
                 if (modified) {
                     //Q5: 發現變更，顯示 confirm dialog 詢問是否要儲存 (20%)
                     int ret = -1;
+                    JOptionPane.showMessageDialog(this, "是否要儲存？", "", JOptionPane.QUESTION_MESSAGE);
                     /////////////////////////////////////////////
                     if (ret == JOptionPane.YES_OPTION) {
                         TaskDB.save(getNoteTitle(), getNoteContent());
