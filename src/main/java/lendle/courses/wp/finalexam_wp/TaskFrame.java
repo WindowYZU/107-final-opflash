@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.event.InternalFrameAdapter;
 import javax.swing.event.InternalFrameEvent;
 
@@ -39,15 +40,18 @@ public class TaskFrame extends JInternalFrame {
         this.setSize(500, 300);
         //Q4: layout 出如圖所示的樣子，
         //記得 JTextArea 要放在捲軸裡面 (30%) 
-        this.setLayout(new BorderLayout());
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
         JDesktopPane jDesktopPane = new JDesktopPane();
-        this.setContentPane(jDesktopPane);
+        frame.setContentPane(jDesktopPane);
+        frame.add(this);
         JPanel northPanel = new JPanel();
         this.add(northPanel, "North");
+        JTextField textField = new JTextField();
         JTextArea textArea = new JTextArea();
+        this.add(textField);
         this.add(textArea);
-        //northPanel.setText("Title:");
-       
         ////////////////////////////
         this.setClosable(true);
         this.setResizable(true);
@@ -81,7 +85,8 @@ public class TaskFrame extends JInternalFrame {
                 if (modified) {
                     //Q5: 發現變更，顯示 confirm dialog 詢問是否要儲存 (20%)
                     int ret = -1;
-                    JOptionPane.showMessageDialog(this, "是否要儲存？", "", JOptionPane.QUESTION_MESSAGE);
+                    JOptionPane.showInternalConfirmDialog(this, "是否要儲存?", "", JOptionPane.INFORMATION_MESSAGE);
+                    //JOptionPane.showMessageDialog(this, "是否要儲存?", "", JOptionPane.INFORMATION_MESSAGE);
                     /////////////////////////////////////////////
                     if (ret == JOptionPane.YES_OPTION) {
                         TaskDB.save(getNoteTitle(), getNoteContent());
